@@ -1,0 +1,40 @@
+function addToCart(productName, price) {
+    alert(productName + ' added to cart!');
+}
+
+function buyNow(productName, price) {
+    localStorage.setItem('product', JSON.stringify({ name: productName, price: price }));
+    window.location.href = 'buy.html';
+}
+
+function submitComment() {
+    const commentInput = document.getElementById('comment-input');
+    const comment = commentInput.value;
+    if (comment) {
+        const commentSection = document.getElementById('comments-section');
+        const newComment = document.createElement('div');
+        newComment.className = 'comment';
+        newComment.textContent = comment;
+        commentSection.appendChild(newComment);
+        commentInput.value = '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const buyForm = document.getElementById('buy-form');
+    if (buyForm) {
+        const product = JSON.parse(localStorage.getItem('product'));
+        if (product) {
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('price').value = `$${product.price}`;
+        }
+        buyForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const gameId = document.getElementById('game-id').value;
+            alert(`Product: ${product.name}\nPrice: $${product.price}\nEmail: ${email}\nPhone: ${phone}\nGame ID: ${gameId}`);
+        });
+    }
+});
+
